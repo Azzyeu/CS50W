@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Search</title>
-        <link rel="stylesheet" href="styles.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body class="d-flex flex-column justify-content-center min-vh-100">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <form action="https://google.com/search" class="mt-5 text-center">
 
-                        <div class="mb-3">
-                            <label for="search" class="form-label text-primary">Google</label>
-                            <input type="text" class="form-control form-control-lg" id="search" name="q">
+<head>
+    <title>Search</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body class="d-flex flex-column justify-content-center min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form action="https://google.com/search" class="mt-5 text-center">
+                    <div class="mb-3">
+                        <label for="search" class="form-label text-primary">Google</label>
+                        <input type="text" class="form-control form-control-lg" id="search" name="q">
+                    </div>
+
+                    <div class="d-flex justify-content-center mb-3">
+                        <div class="me-3">
+                            <button type="submit" class="btn btn-outline-dark">Google Search</button>
                         </div>
 
-                        <div class="d-flex justify-content-center mb-3">
-                            <div class="me-3">
-                                <button type="submit" class="btn btn-outline-dark">Google Search</button>
-                            </div>
-
-                            <div>
-                                <button type="submit" class="btn btn-outline-dark" name="btnI" value="I">I'm Feeling Lucky</button>
-                            </div>
+                        <div>
+                            <button type="submit" class="btn btn-outline-dark" name="btnI" value="I">I'm Feeling
+                                Lucky</button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>

@@ -1,2 +1,13 @@
+# Project 0 - Search
 node_modules/
 styles.css.map
+
+# Project 1 - Wiki
+
+.venv/
+__pycache__/
+db.sqlite3
+migrations
+
+# Personal
+Lectures/

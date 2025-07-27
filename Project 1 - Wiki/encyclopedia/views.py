@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
 from . import util
 from markdown2 import Markdown
@@ -23,3 +23,11 @@ def load_page(request, title):
         'title': title,
         'content': html
     })
+
+def search(request):
+    query = request.GET["q"]
+    
+    for entry in util.list_entries():
+        if query.lower() == entry.lower():
+            return redirect(reverse("load_page", args=[query]))
+    return render(request, "encyclopedia/search.html")

@@ -30,4 +30,7 @@ def search(request):
     for entry in util.list_entries():
         if query.lower() == entry.lower():
             return redirect(reverse("load_page", args=[query]))
-    return render(request, "encyclopedia/search.html")
+    return render(request, "encyclopedia/search.html", {
+        'query': query,
+        'entries': util.list_entries()
+    })

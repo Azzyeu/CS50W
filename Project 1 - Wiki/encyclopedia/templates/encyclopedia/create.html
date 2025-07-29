@@ -16,7 +16,7 @@
         {{ form|crispy }}
         {% if not flag %}
         <button type="submit" class="btn btn-lg btn-primary">Save</button>
-        {% elif flag %}
+        {% else %}
         <button type="submit" class="btn btn-lg btn-primary">Okay</button>
         {% endif %}
     </form>

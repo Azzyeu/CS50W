@@ -1,0 +1,23 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    New Page
+{% endblock %}
+
+{% block body %}
+    <h1>Create New Page</h1>
+    {% if flag %}
+        <p>Page already exists</p>
+    {% endif %}
+    <form action="{% url 'create' %}" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% if not flag %}
+        <button type="submit" class="btn btn-lg btn-primary">Save</button>
+        {% elif flag %}
+        <button type="submit" class="btn btn-lg btn-primary">Okay</button>
+        {% endif %}
+    </form>
+{% endblock %}

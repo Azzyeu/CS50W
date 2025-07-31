@@ -4,7 +4,7 @@ from django import forms
 
 from . import util
 from markdown2 import Markdown
-
+import random as rd
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -80,3 +80,7 @@ def edit(request, title):
         }),
         "title": title
     })
+
+def random(request):
+    title = rd.choice(util.list_entries())
+    return redirect(reverse("load_page", args=[title]))

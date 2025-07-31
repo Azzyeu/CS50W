@@ -61,3 +61,22 @@ def create(request):
     return render(request, "encyclopedia/create.html", {
         "form": NewPageForm()
     })
+
+def edit(request, title):
+    if request.method == "POST":
+        form = NewPageForm(request.POST)
+        if form.is_valid():
+            content = form.cleaned_data["content"]
+            
+            with open(f"entries/{title}.md", "w") as f:
+                f.write(content)
+            
+            return redirect(reverse("load_page", args=[title]))
+        
+    return render(request, "encyclopedia/edit.html", {
+        "form": NewPageForm(initial={
+            "title": title,
+            "content": util.get_entry(title)
+        }),
+        "title": title
+    })

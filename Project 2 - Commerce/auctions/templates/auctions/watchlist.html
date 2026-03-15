@@ -1,10 +1,12 @@
 {% extends "auctions/layout.html" %}
 
-{% block body %}
-    <h2 class="my-4 ml-3"><b>Active Listings</b></h2>
+{% block title %}
+    My Watchlist
+{% endblock %}
 
+{% block body %}
     <div class="row g-4">
-        {% for listing in listings %}
+        {% for listing in watchlist %}
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm">
 
@@ -28,7 +30,7 @@
                 <div class="col-12">
                     <div class="alert alert-info"><b>No active listings.</b></div>
                 </div>
-        {% endfor %}
-    </div>
+
+        {%endfor%}
 
 {% endblock %}

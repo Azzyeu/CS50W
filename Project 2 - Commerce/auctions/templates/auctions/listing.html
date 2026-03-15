@@ -1,0 +1,123 @@
+{% extends "auctions/layout.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    {{ listing.title }}
+{% endblock %}
+
+{% block body %}
+    <div class="row mt-4">
+        <div class="col-12 mb-3">
+            {% if winner == request.user %}
+                <div class="alert alert-success">
+                    <b>Congratulations, you have won this item!</b>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-8 my-auto mx-auto">
+            <div class="card shadow-sm border-0">
+                {% if listing.image_url %}
+                    <img class="card-img-top img-fluid rounded listing-img" src="{{ listing.image_url }}" alt="Picture of {{ listing.title }}">
+                {% else %}
+                    <div class="p-5 bg-light text-secondary text-center rounded">
+                        <span>No picture attached.</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-4 my-auto">
+            <h3 class="fw-bold mb-2"><b>{{ listing.title }}</b></h3>
+            <h2 class="text-danger fw-bold mb-4"><b>£{{ listing.price }}</b></h2>
+            <p class="lead">{{ listing.description }}</p>
+            
+            {% if user.is_authenticated and listing.is_active %}
+                {% if user != listing.user %}
+                    <form class="mb-3" action="{% url 'view_listing' listing.title %}" method="post">
+                        {% csrf_token %}
+                        <div class="row g-2 align-items-center">
+                            <div class="col-md-8">
+                                {{ bid_form|crispy }}
+                            </div>
+                            <div class="col-md-4 mt-md-0 mt-3 align-self-end">
+                                <button type="submit" class="btn btn-lg btn-danger mb-3" name="action" value="bid">Place Bid</button>
+                            </div>
+                        </div>
+
+                        {% if not valid_bid %}
+                            <div class="text-danger small mt-1">Your bid must be higher than the current bid</div>
+                        {% endif %}
+                    </form>
+
+                    <form action="{% url 'view_listing' listing.title %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-lg btn-primary" name="action" value="toggle_watchlist">
+                            {% if is_watching %}
+                                Remove from Watchlist
+                            {% else %}
+                                Add to Watchlist
+                            {% endif %}
+                        </button>
+                    </form>
+
+                {% else %}
+                    <form action="{% url 'view_listing' listing.title %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-lg btn-danger" name="action" value="close_listing">
+                            Close Listing
+                        </button>
+                    </form>
+                {% endif %}
+            {% endif %}
+            
+            <div class="card mt-4 shadow-sm border-0 bg-light">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Details</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><strong>Listed by:</strong> <span class="badge bg-secondary">{{ listing.user }}</span></li>
+
+                        <li>Category: 
+                            {% if listing.category %} 
+                                <span class="badge bg-info text-dark">{{ listing.category }}</span>
+                            {% else %}
+                                <span class="text-muted">No category listed.</span> 
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-lg-10 mx-auto">
+            {% if user.is_authenticated and listing.is_active %}
+                <div class="card shadow-sm mb-4 border-0">
+                    <div class="card-body bg-light">
+                        <form action="{% url 'view_listing' listing.title %}" method="post">
+                            {% csrf_token %}
+                            {{ comment_form|crispy }}
+                            <button type="submit" class="btn btn-lg btn-primary mt-2" name="action" value="comment">Post</button>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="list-group shadow-sm">
+                {% for comment in comments %}
+                    <div class="list-group-item flex-column align-items start p-3 border-light">
+                        <div class="d-flex w-100 justify-content-between mb-1">
+                            <h6 class="mb-0 fw-bold text-primary">{{ comment.user }}</h6>
+                        </div>
+                        <p class="mb-0 text-muted">{{ comment.description }}</p>
+                    </div>
+                {% empty %}
+                    <div class="list-group-item text-center text-muted p-4 bg-light">
+                        No comments have been posted.
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
